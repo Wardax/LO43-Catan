@@ -1,12 +1,9 @@
-/**
- * Created by Guillaume on 28/10/2018.
- */
+
 public class Parcelle {
     // 0 res1, 1 res2, 2 res3, 3 res4, 4desert
     private int type;
     private int numero;
     private Croisement[] croisements;
-    private int pos;
     private boolean brigand;
 
     public Parcelle(int type, int numero, int pos) {
@@ -14,11 +11,6 @@ public class Parcelle {
         this.numero = numero;
         croisements=new Croisement[6];
         brigand=false;
-        this.pos=pos;
-    }
-
-    public int getPos() {
-        return pos;
     }
 
     public Croisement[] getCroisements() {
@@ -45,4 +37,7 @@ public class Parcelle {
     }
 
 
+    public void setBrigand(boolean brigand) {
+        this.brigand = brigand;
+    }
 }
