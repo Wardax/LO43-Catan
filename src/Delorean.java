@@ -1,5 +1,5 @@
 public class Delorean extends Construction {
-    Convertisseur convertisseur;
+    private Convertisseur convertisseur;
 
     public Delorean(Joueur j){
         super(j);

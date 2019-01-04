@@ -5,12 +5,12 @@ public class Partie {
     private Joueur[] joueurs;
     private ArrayList<CarteDeveloppement> cartes;
     private Joueur joueurActuel;
-    boolean verifSecond;
+    private boolean verifSecond;
 
     public Partie() {
     }
 
-    public ArrayList<Route> chercheRoutesPossible() {
+    public ArrayList<Route> rechercheRoutesPossibles() {
         verifSecond =true;
         ArrayList<Route> routesPossible;
         ArrayList<Construction> cs = joueurActuel.getConstructions();
@@ -23,4 +23,11 @@ public class Partie {
         }
     }
 
+    public ArrayList<Croisement> rechercheConstructionsPossibles() {}
+
+    public ArrayList<Delorean> rechercheConvecteursPossibles() {}
+
+    public ArrayList<CarteDeveloppement> getCartes() {
+        return cartes;
+    }
 }

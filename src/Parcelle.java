@@ -1,10 +1,11 @@
 
 public class Parcelle {
-    // 0 res1, 1 res2, 2 res3, 3 res4, 4desert
     private int type;
     private int numero;
     private Croisement[] croisements;
     private boolean brigand;
+    private int posX;
+    private int posY;
 
     public Parcelle(int type, int numero, int pos) {
         this.type = type;
@@ -17,17 +18,6 @@ public class Parcelle {
         return croisements;
     }
 
-    public int getNumero(){
-        return numero;
-    }
-
-    public int getRessource() {
-        if (!brigand) {
-            return type;
-        }
-        return 4;
-    }
-
     public void produitRessource(){
         if (!brigand && type!=4) {
             for(int i = 0; i<6; i++) {
@@ -36,8 +26,11 @@ public class Parcelle {
         }
     }
 
-
     public void setBrigand(boolean brigand) {
         this.brigand = brigand;
+    }
+
+    public void setCroisements(Croisement[] croisements) {
+        this.croisements = croisements;
     }
 }

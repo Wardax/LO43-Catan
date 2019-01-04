@@ -1,10 +1,13 @@
+import java.util.ArrayList;
 
 public class Croisement {
-    private Route[] routes;
+    private ArrayList<Route> routes;
     private Construction construction;
+    private int posX;
+    private int posY;
 
     public Croisement() {
-        routes = new Route[3];
+        routes = new ArrayList<>();
     }
 
     public void setConstruction(Construction c) {
@@ -21,5 +24,21 @@ public class Croisement {
 
     public Construction getConstruction() {
         return construction;
+    }
+
+    public ArrayList<Route> getRoutes() {
+        return routes;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setRoute(Route route) {
+        routes.add(route);
     }
 }
