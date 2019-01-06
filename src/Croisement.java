@@ -41,4 +41,17 @@ public class Croisement {
     public void setRoute(Route route) {
         routes.add(route);
     }
+
+    public boolean isConstructible() {
+        boolean constructible = construction == null;
+        for (Route r : routes) {
+            if (r.getCroisementAdj(this).getConstruction() != null) constructible = false;
+        }
+        return constructible;
+    }
+
+    public void setPos(int x, int y) {
+        posX = x;
+        posY = y;
+    }
 }

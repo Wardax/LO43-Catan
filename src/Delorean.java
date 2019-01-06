@@ -1,8 +1,8 @@
 public class Delorean extends Construction {
     private Convertisseur convertisseur;
 
-    public Delorean(Joueur j){
-        super(j);
+    public Delorean(Joueur j, Croisement c) {
+        super(j, c);
     }
 
     public int getNbPoint() {
@@ -17,5 +17,9 @@ public class Delorean extends Construction {
     public void recupereRessource(int type){
         if (convertisseur == null) getJoueur().ajouteRessource(type, 1);
         getJoueur().ajouteRessource(type, 2);
+    }
+
+    public Convertisseur getConvertisseur() {
+        return convertisseur;
     }
 }

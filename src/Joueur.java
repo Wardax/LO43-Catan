@@ -1,9 +1,24 @@
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 public class Joueur {
     private int numero;
+    public String nom;
+    private Color couleur;
+    /*
+    0: bois
+    1: pierre
+    2: metal
+    3: or
+    4: charbon
+    5: pétrole
+    6: uranium
+    7: terres rares
+     */
     private int[] ressources;
     private ArrayList<Construction> constructions;
+    private ArrayList<Route> routes;
     private ArrayList<CarteDeveloppement> cartes;
     private int score;
     private int nbChevalier;
@@ -12,9 +27,16 @@ public class Joueur {
 
     public Joueur(int n) {
         numero = n;
-        ressources = new int[5]; // nombre de ressource a changer
+        ressources = new int[8]; // nombre de ressource a changer
         constructions = new ArrayList<>();
+        routes = new ArrayList<>();
         cartes = new ArrayList<>();
+        switch (n) {
+            case 1 : couleur = Color.BLUE; break;
+            case 2 : couleur = Color.GREEN; break;
+            case 3 : couleur = Color.RED; break;
+            case 4 : couleur = Color.YELLOW; break;
+        }
     }
 
     public void acheterCarteDeveloppement(CarteDeveloppement cd){}
@@ -29,7 +51,7 @@ public class Joueur {
         ressources[type]-=nb;
     }
 
-    public int[][] proposerEchange(){}
+   // public int[][] proposerEchange(){}
 
     public void echanger(int[] ressourcesProposees, int[] ressourcesDemandees, Joueur j) {
         for (int i =0; i<ressourcesProposees.length; i++){
@@ -87,4 +109,46 @@ public class Joueur {
     public void setArmeLaPlusPuissante(boolean armeLaPlusPuissante) {
         this.armeLaPlusPuissante = armeLaPlusPuissante;
     }
+
+    public void construireDelorean(Croisement croisement) {
+        if (constructions.size() > 1) {
+            ressources[2]-=2;
+            ressources[3]--;
+        }
+        Delorean d = new Delorean(this, croisement);
+        croisement.setConstruction(d);
+        constructions.add(d);
+        score++;
+    }
+
+    public ArrayList<Route> getRoutes() {
+        return routes;
+    }
+
+    public void construireRoute(Route route) {
+        if (routes.size() > 1) {
+            ressources[0]--;
+            ressources[1]--;
+        }
+        routes.add(route);
+        route.ammenagementRoute(numero);
+    }
+
+    public Color getCouleur() {
+        return couleur;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public boolean ressourcesSuffisante(int i) {
+        switch (i) {
+            case 0: return ressources[0] > 0 && ressources[1] > 0;
+            case 1: return ressources[2] > 1 && ressources[3] > 0;
+            case 4: return ressources[0] > 0 && ressources[1] > 0 && ressources[3] > 0;
+        }
+        return false;
+    }
+
 }

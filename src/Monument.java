@@ -1,7 +1,6 @@
 public class Monument extends Construction {
-
-    public Monument(Joueur j) {
-        super(j);
+    public Monument(Joueur j, Croisement c) {
+        super(j, c);
     }
 
     public int getNbPoint() {
