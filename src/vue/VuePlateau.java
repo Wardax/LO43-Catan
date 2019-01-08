@@ -1,7 +1,18 @@
+package vue;
+
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import model.Croisement;
+import model.Parcelle;
+import model.Plateau;
+import model.Route;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class VuePlateau extends Group {
@@ -9,7 +20,7 @@ public class VuePlateau extends Group {
     private ArrayList<VueCroisement> croisements;
     public VuePlateau(Plateau plateau){
         super();
-        Parcelle[] parcelles = plateau.getParcelles();
+        ArrayList<Parcelle> parcelles = plateau.getParcelles();
 
         for (Parcelle p : parcelles) {
             int x = p.getPosX();
@@ -22,9 +33,12 @@ public class VuePlateau extends Group {
                     80., 100.,
                     30., 100.,
                     0., 50.});
-            polygon.setFill(Color.DARKBLUE);
+            //polygon.setFill(new ImagePattern());
+            polygon.setFill(findColor(p.getType()));
             polygon.relocate(x, y);
-            getChildren().add(polygon);
+            Text t = new Text(x+45, y+55, "" + p.getNumero());
+            t.setFont(Font.font ("Verdana", 18));
+            getChildren().addAll(polygon, t);
 
         }
 
@@ -55,6 +69,17 @@ public class VuePlateau extends Group {
         }
         getChildren().addAll(croisements);
         relocate(200, 150);
+    }
+
+    private Paint findColor(int numero) {
+        switch (numero) {
+            case 0 : return Color.BROWN;
+            case 1 : return Color.DARKGRAY;
+            case 2 : return Color.GRAY;
+            case 3 : return Color.GOLD;
+            case 4 : return Color.LIGHTGREEN;
+        }
+        return null;
     }
 
     public ArrayList<VueRoute> getRoutes() {

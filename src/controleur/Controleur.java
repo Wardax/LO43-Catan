@@ -1,9 +1,19 @@
+package controleur;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.BackToCatan;
+import model.Croisement;
+import model.Joueur;
+import model.Model;
+import vue.Vue;
+import vue.VueCroisement;
+import vue.VuePlateau;
+import vue.VueRoute;
 
 import java.util.ArrayList;
 
@@ -22,18 +32,22 @@ public class Controleur {
     private void start() {
         activationBoutonFinDeTour();
         constructionDeloreanBase();
-        activationBoutonConstruction();
-        activationBoutonCarteDev();
     }
 
     private void activationBoutonFinDeTour() {
         vue.getbFinTour().setOnAction(actionEvent -> {
             model.joueurSuivant();
-            if (model.getJoueurActuel().getConstructions().size() >= 2) start = false;
+            vue.actualisationFinDeTour();
+            if (model.getJoueurActuel().getConstructions().size() >= 2) {
+                start = false;
+                activationBoutonConstruction();
+                activationBoutonCarteDev();
+            }
             if (start) constructionDeloreanBase();
             else {
+                vue.afficherDe(model.lancementDe());
+                vue.actualiseVuesJoueurs();
                 //lancer dé
-                activationBoutonConstruction();
             }
         });
     }
@@ -61,7 +75,7 @@ public class Controleur {
 
             Button bRoute = new Button("Route");
             bRoute.relocate(150, 50);
-            if(joueur.ressourcesSuffisante(0)) {
+            if(joueur.ressourcesSuffisante(0) && model.routesConstructibles().size() > 0) {
                 bRoute.setOnAction(actionEvent2 -> {
                     fenetreConstruction.hide();
                     constructionRoute();
@@ -71,7 +85,7 @@ public class Controleur {
 
             Button bDelorean = new Button("Delorean");
             bDelorean.relocate(150, 100);
-            if(joueur.ressourcesSuffisante(1)) {
+            if(joueur.ressourcesSuffisante(1) && model.deloreansConstructibles().size() > 0) {
                 bDelorean.setOnAction(actionEvent2 -> {
                     fenetreConstruction.hide();
                     constructionDelorean();
@@ -92,7 +106,7 @@ public class Controleur {
 
             Button bConvecteur = new Button("Convecteur");
             bConvecteur.relocate(150, 200);
-            if(joueur.ressourcesSuffisante(3)) {
+            if(joueur.ressourcesSuffisante(3) && model.convecteursConstrucibles().size() > 0) {
                 bConvecteur.setOnAction(actionEvent2 -> {
                     System.out.println("a");
                     fenetreConstruction.hide();
@@ -145,7 +159,7 @@ public class Controleur {
         ArrayList<VueCroisement> vcs = vp.getCroisements();
         for(VueCroisement vc : vcs) {
             if (vc.getCroisement().isConstructible()) {
-                vc.setFill(Color.GREEN);
+                vc.setFill(Color.BLACK);
                 vc.setOnMouseClicked(MouseEvent -> {
                     model.getJoueurActuel().construireDelorean(vc.getCroisement());
                     vc.setFill(model.getJoueurActuel().getCouleur());
@@ -188,7 +202,7 @@ public class Controleur {
         ArrayList<Croisement> croisements = model.deloreansConstructibles();
         for(VueCroisement vc : vcs) {
             if (croisements.contains(vc.getCroisement())) {
-                vc.setFill(Color.GREEN);
+                vc.setFill(Color.BLACK);
                 vc.setOnMouseClicked(MouseEvent -> {
                     model.getJoueurActuel().construireDelorean(vc.getCroisement());
                     vc.setFill(model.getJoueurActuel().getCouleur());

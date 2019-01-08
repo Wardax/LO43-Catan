@@ -1,4 +1,9 @@
+package model;
+
 import javafx.scene.paint.Color;
+import model.cartes.CarteDeveloppement;
+import model.constructions.Construction;
+import model.constructions.Delorean;
 
 import java.util.ArrayList;
 
@@ -35,7 +40,7 @@ public class Joueur {
             case 1 : couleur = Color.BLUE; break;
             case 2 : couleur = Color.GREEN; break;
             case 3 : couleur = Color.RED; break;
-            case 4 : couleur = Color.YELLOW; break;
+            case 4 : couleur = Color.ORANGE; break;
         }
     }
 

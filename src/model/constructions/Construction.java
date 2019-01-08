@@ -1,3 +1,8 @@
+package model.constructions;
+
+import model.Croisement;
+import model.Joueur;
+
 public abstract class Construction {
     private Joueur joueur;
     private Croisement croisement;

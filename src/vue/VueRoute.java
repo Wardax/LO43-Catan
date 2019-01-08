@@ -1,4 +1,7 @@
+package vue;
+
 import javafx.scene.shape.Rectangle;
+import model.Route;
 
 public class VueRoute extends Rectangle {
     private Route route;

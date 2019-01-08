@@ -1,3 +1,8 @@
+package model.constructions;
+
+import model.Croisement;
+import model.Joueur;
+
 public class Delorean extends Construction {
     private Convertisseur convertisseur;
 
@@ -16,7 +21,7 @@ public class Delorean extends Construction {
 
     public void recupereRessource(int type){
         if (convertisseur == null) getJoueur().ajouteRessource(type, 1);
-        getJoueur().ajouteRessource(type, 2);
+        else getJoueur().ajouteRessource(type, 2);
     }
 
     public Convertisseur getConvertisseur() {

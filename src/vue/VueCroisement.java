@@ -1,4 +1,7 @@
+package vue;
+
 import javafx.scene.shape.Circle;
+import model.Croisement;
 
 public class VueCroisement extends Circle {
     Croisement croisement;

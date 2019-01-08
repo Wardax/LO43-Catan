@@ -1,3 +1,5 @@
+package model;
+
 public class Parcelle {
     private int type;
     private int numero;
@@ -6,15 +8,9 @@ public class Parcelle {
     private int posX;
     private int posY;
 
-    public Parcelle(int type, int numero, int pos) {
+    public Parcelle(int type) {
         this.type = type;
-        this.numero = numero;
-        croisements=new Croisement[6];
-        brigand=false;
-    }
-
-    public Parcelle(int i, int i1) {
-
+        brigand = false;
     }
 
     public Croisement[] getCroisements() {
@@ -52,5 +48,13 @@ public class Parcelle {
 
     public int getNumero() {
         return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public int getType() {
+        return type;
     }
 }

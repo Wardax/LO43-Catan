@@ -1,3 +1,7 @@
+package model.constructions;
+
+import model.Croisement;
+
 public class Convertisseur {
 
     private Croisement acces;

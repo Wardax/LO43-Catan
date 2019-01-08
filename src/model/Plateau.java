@@ -1,42 +1,66 @@
+package model;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Plateau {
-    private Parcelle[] parcelles;
+    private ArrayList<Parcelle> parcelles;
     private Brigand brigand;
     private Croisement[] croisements;
     private ArrayList<Route> routes;
 
 
     public Plateau(int date) {
-        int n = 19;
-        parcelles = new Parcelle[n];
-        for (int i = 0; i < n; i++) {
-            parcelles[i] = new Parcelle(i, 0);
+
+        parcelles = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            parcelles.add(new Parcelle(0));
         }
+        for (int i = 0; i < 4; i++) {
+            parcelles.add(new Parcelle(1));
+        }
+        for (int i = 0; i < 4; i++) {
+            parcelles.add(new Parcelle(2));
+        }
+        for (int i = 0; i < 4; i++) {
+            parcelles.add(new Parcelle(3));
+        }
+        for (int i = 0; i < 3; i++) {
+            parcelles.add(new Parcelle(4));
+        }
+
+        Collections.shuffle(parcelles);
+        int[] nums = {2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12};
+        for(int i = 0; i < 19; i++){
+            parcelles.get(i).setNumero(nums[i]);
+        }
+
+        Collections.shuffle(parcelles);
+
         croisements = new Croisement[54];
         for (int i = 0; i < 54; i++) {
             croisements[i] = new Croisement();
         }
 
-        lien(parcelles[0], 160, 0, 0, 3, 8);
-        lien(parcelles[1], 80, 50, 2, 7, 13);
-        lien(parcelles[2], 240, 50, 4, 9, 15);
-        lien(parcelles[3], 0, 100, 6, 12, 18);
-        lien(parcelles[4], 160, 100, 8, 14, 20);
-        lien(parcelles[5], 320, 100, 10, 16, 22);
-        lien(parcelles[6], 80, 150, 13, 19, 25);
-        lien(parcelles[7], 240, 150, 15, 21, 27);
-        lien(parcelles[8], 0, 200, 18, 24, 30);
-        lien(parcelles[9], 160, 200, 20, 26, 32);
-        lien(parcelles[10], 320, 200, 22, 28, 34);
-        lien(parcelles[11], 80, 250, 25, 31, 37);
-        lien(parcelles[12], 240, 250, 27, 33, 39);
-        lien(parcelles[13], 0, 300, 30, 36, 42);
-        lien(parcelles[14], 160, 300, 32, 38, 44);
-        lien(parcelles[15], 320, 300, 34, 40, 46);
-        lien(parcelles[16], 80, 350, 37, 43, 48);
-        lien(parcelles[17], 240, 350, 39, 45, 50);
-        lien(parcelles[18], 160, 400, 44, 49, 52);
+        lien(parcelles.get(0), 160, 0, 0, 3, 8);
+        lien(parcelles.get(1), 80, 50, 2, 7, 13);
+        lien(parcelles.get(2), 240, 50, 4, 9, 15);
+        lien(parcelles.get(3), 0, 100, 6, 12, 18);
+        lien(parcelles.get(4), 160, 100, 8, 14, 20);
+        lien(parcelles.get(5), 320, 100, 10, 16, 22);
+        lien(parcelles.get(6), 80, 150, 13, 19, 25);
+        lien(parcelles.get(7), 240, 150, 15, 21, 27);
+        lien(parcelles.get(8), 0, 200, 18, 24, 30);
+        lien(parcelles.get(9), 160, 200, 20, 26, 32);
+        lien(parcelles.get(10), 320, 200, 22, 28, 34);
+        lien(parcelles.get(11), 80, 250, 25, 31, 37);
+        lien(parcelles.get(12), 240, 250, 27, 33, 39);
+        lien(parcelles.get(13), 0, 300, 30, 36, 42);
+        lien(parcelles.get(14), 160, 300, 32, 38, 44);
+        lien(parcelles.get(15), 320, 300, 34, 40, 46);
+        lien(parcelles.get(16), 80, 350, 37, 43, 48);
+        lien(parcelles.get(17), 240, 350, 39, 45, 50);
+        lien(parcelles.get(18), 160, 400, 44, 49, 52);
 
         // Création et liaison des routes avec les croisements
         routes = new ArrayList<>();
@@ -111,7 +135,7 @@ public class Plateau {
         routes.add(r);
     }
 
-    public Parcelle[] getParcelles() {
+    public ArrayList<Parcelle> getParcelles() {
         return parcelles;
     }
 

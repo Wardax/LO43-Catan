@@ -1,3 +1,9 @@
+package model;
+
+import model.cartes.CarteDeveloppement;
+import model.constructions.Construction;
+import model.constructions.Delorean;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,7 +13,7 @@ public class Model {
     private int nbJoueurs;
     private ArrayList<CarteDeveloppement> cartes;
     private Joueur joueurActuel;
-    private static Random rand;
+    private static Random rand = new Random();
 
     public Model(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
@@ -96,7 +102,7 @@ public class Model {
         de[0] = rand.nextInt(4) + 1;
         de[1] = rand.nextInt(6) + 1;
         de[2] = rand.nextInt(6) + 1;
-        Parcelle[] parcelles = plateaux[de[0]-1].getParcelles();
+        ArrayList<Parcelle> parcelles = plateaux[0/*de[0]-1*/].getParcelles();
         int n = de[1] + de[2];
         for (Parcelle p : parcelles) {
             if(p.getNumero() == n)  p.produitRessource();

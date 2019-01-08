@@ -1,5 +1,9 @@
+package model;
+
+import controleur.Controleur;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import vue.Vue;
 
 public class BackToCatan extends Application {
 

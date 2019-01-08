@@ -1,11 +1,15 @@
+package vue;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.Joueur;
+import model.Model;
+import model.Plateau;
 
 import java.util.ArrayList;
 
@@ -51,7 +55,7 @@ public class Vue {
         vueJeu.getChildren().add(joueurActuel);
         joueurActuel.relocate(300,40);
         joueurActuel.setFont(Font.font ("Verdana", 25));
-        joueurActuel.setFill(Color.DARKBLUE);
+        joueurActuel.setFill(model.getJoueurActuel().getCouleur());
 
         Rectangle separateur = new Rectangle(3,700, Color.DARKBLUE);
         vueJeu.getChildren().add(separateur);
@@ -95,5 +99,21 @@ public class Vue {
 
     public Button getbCarteDev() {
         return bCarteDev;
+    }
+
+    public void actualiseVuesJoueurs() {
+        for (VueJoueur vj : vueJoueurs) {
+            vj.actualiseVueJoueur();
+        }
+    }
+
+    public void afficherDe(int[] des) {
+
+        System.out.println(des[1] + des[2]);
+    }
+
+    public void actualisationFinDeTour() {
+        joueurActuel.setText("C'est le tour du joueur n°"+(model.getJoueurActuel().getNumero()));
+        joueurActuel.setFill(model.getJoueurActuel().getCouleur());
     }
 }

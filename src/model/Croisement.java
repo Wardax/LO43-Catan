@@ -1,3 +1,7 @@
+package model;
+
+import model.constructions.Construction;
+
 import java.util.ArrayList;
 
 public class Croisement {
@@ -15,7 +19,7 @@ public class Croisement {
     }
 
     public void recupereRessource(int type) {
-        construction.recupereRessource(type);
+        if (construction != null) construction.recupereRessource(type);
     }
 
     public boolean hasConstruction() {

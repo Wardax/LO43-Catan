@@ -1,3 +1,8 @@
+package model.constructions;
+
+import model.Croisement;
+import model.Joueur;
+
 public class Monument extends Construction {
     public Monument(Joueur j, Croisement c) {
         super(j, c);

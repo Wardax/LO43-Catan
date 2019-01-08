@@ -1,3 +1,6 @@
+package model;
+
+
 public class Route {
     // 0 non construit, x joueurX
     private int joueur;
@@ -35,8 +38,6 @@ public class Route {
     public int getRotation() {
         return rotation;
     }
-
-    public void addCroisement(Croisement c){}
 
     public Croisement getCroisementAdj(Croisement croisement) {
         if (croisements[0] == croisement) return croisements[1];
