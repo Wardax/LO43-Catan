@@ -3,6 +3,8 @@ package vue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -37,19 +39,36 @@ public class Vue {
 
     private void creerSceneJeu(){
         vueJeu = new Group();
+
+
         Plateau[] plateaux = model.getPlateaux();
         vuesPlateaux = new VuePlateau[plateaux.length];
-        for (int i = 0; i < 1/*plateaux.length*/; i++) {
+        for (int i = 0; i < plateaux.length; i++) {
             vuesPlateaux[i] = new VuePlateau(plateaux[i]);
         }
+
+        Tab[] tabs = new Tab[plateaux.length];
+        for(int i = 0; i < tabs.length; i++) {
+            tabs[i] = new Tab("" + plateaux[i].getDate());
+            Rectangle r = new Rectangle(0, 0);
+            Group g = new Group();
+            g.getChildren().addAll(r, vuesPlateaux[i]);
+            tabs[i].setContent(g);
+            tabs[i].setClosable(false);
+
+        }
+        TabPane tabPane = new TabPane();
+        tabPane.getTabs().setAll(tabs);
+        tabPane.setTabMinWidth(202);
+        tabPane.setTabMinHeight(30);
+        tabPane.relocate(0, 80);
+        vueJeu.getChildren().add(tabPane);
 
         Joueur[] joueurs = model.getJoueurs();
         vueJoueurs = new VueJoueur[joueurs.length];
         for (int i = 0; i < joueurs.length; i++) {
             vueJoueurs[i] = new VueJoueur(joueurs[i]);
         }
-
-        vueJeu.getChildren().add(vuesPlateaux[0]);
 
         joueurActuel=new Text("C'est le tour du joueur n°"+(model.getJoueurActuel().getNumero()));
         vueJeu.getChildren().add(joueurActuel);
@@ -115,5 +134,19 @@ public class Vue {
     public void actualisationFinDeTour() {
         joueurActuel.setText("C'est le tour du joueur n°"+(model.getJoueurActuel().getNumero()));
         joueurActuel.setFill(model.getJoueurActuel().getCouleur());
+    }
+
+    public void enableButton() {
+        bFinTour.setDisable(false);
+        bCarteDev.setDisable(false);
+        bConstruction.setDisable(false);
+        bFinTour.setDisable(false);
+    }
+
+    public void disableButton() {
+        bFinTour.setDisable(true);
+        bCarteDev.setDisable(true);
+        bConstruction.setDisable(true);
+        bFinTour.setDisable(true);
     }
 }

@@ -32,18 +32,23 @@ public class Controleur {
     private void start() {
         activationBoutonFinDeTour();
         constructionDeloreanBase();
+        vue.disableButton();
     }
 
     private void activationBoutonFinDeTour() {
         vue.getbFinTour().setOnAction(actionEvent -> {
             model.joueurSuivant();
             vue.actualisationFinDeTour();
-            if (model.getJoueurActuel().getConstructions().size() >= 2) {
+            if (start && model.getJoueurActuel().getConstructions().size() >= 2) {
                 start = false;
                 activationBoutonConstruction();
                 activationBoutonCarteDev();
+                vue.enableButton();
             }
-            if (start) constructionDeloreanBase();
+            if (start) {
+                vue.getbFinTour().setDisable(true);
+                constructionDeloreanBase();
+            }
             else {
                 vue.afficherDe(model.lancementDe());
                 vue.actualiseVuesJoueurs();
@@ -191,6 +196,7 @@ public class Controleur {
                         }
                         vr2.setOnMouseClicked(null);
                     }
+                    if (start) vue.getbFinTour().setDisable(false);
                 });
             }
         }

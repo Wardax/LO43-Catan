@@ -68,7 +68,7 @@ public class VuePlateau extends Group {
             croisements.add(vc);
         }
         getChildren().addAll(croisements);
-        relocate(200, 150);
+        relocate(200, 40);
     }
 
     private Paint findColor(int numero) {

@@ -30,7 +30,7 @@ public class VueJoueur extends Group{
 
     public VueJoueur(Joueur joueur) {
         this.joueur = joueur;
-        imageViews=new ImageView[10];
+        imageViews=new ImageView[11];
 
         //imageViews[0]=new ImageView("image/irrigation.png");
         /*for (int i=0; i<imageViews.length; i++){
@@ -39,14 +39,14 @@ public class VueJoueur extends Group{
             getChildren().add(imageViews[i]);
         }*/
 
-        texts =new Text[11];
+        texts =new Text[12];
         for (int i = 0; i < texts.length; i++){
             texts[i]=new Text("0");
             texts[i].setFont(Font.font ("Verdana", 20));
             texts[i].setFill(joueur.getCouleur());
             getChildren().add(texts[i]);
         }
-        texts[10].setText(joueur.getNom());
+        texts[11].setText(joueur.getNom());
         actualiseVueJoueur();
         affichageResume();
     }
@@ -54,20 +54,26 @@ public class VueJoueur extends Group{
     public void actualiseVueJoueur(){
         int[] ressources = joueur.getRessources();
         for (int i = 0; i < ressources.length; i++) {
-            texts[i].setText(i + ":"+ressources[i]);
+            texts[i].setText("" + ressources[i]);
         }
-        texts[8].setText(""+joueur.getScore());
-        texts[9].setText(""+joueur.getCartes().size());
+        texts[8].setText("" + joueur.getScore());
+        texts[9].setText("" + joueur.getCartes().size());
+        texts[10].setText("" + joueur.getTotalRessources());
     }
 
     public void affichageResume(){
-        relocate(900,60*joueur.getNumero());
-        texts[8].relocate(0,20);
-        texts[9].relocate(40,20);
+        relocate(900,120*(joueur.getNumero()-1));
+        texts[8].relocate(0,50);
+        texts[9].relocate(70,50);
         //imageViews[0].relocate(55,20);
-        texts[10].relocate(240, 20);
-        for (int i=1; i<8; i++){
-            texts[i].relocate(i*40+25, 20);
+        texts[10].relocate(140, 50);
+        texts[11].relocate(0, 20);
+        for (int i=0; i<4; i++){
+            texts[i].relocate(i*70, 80);
+            //imageViews[i].relocate(i*40+40,20);
+        }
+        for (int i=0; i<4; i++){
+            texts[i+4].relocate(i*70, 100);
             //imageViews[i].relocate(i*40+40,20);
         }
     }

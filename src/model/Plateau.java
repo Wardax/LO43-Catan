@@ -8,6 +8,7 @@ public class Plateau {
     private Brigand brigand;
     private Croisement[] croisements;
     private ArrayList<Route> routes;
+    int date;
 
 
     public Plateau(int date) {
@@ -145,5 +146,9 @@ public class Plateau {
 
     public ArrayList<Route> getRoutes() {
         return routes;
+    }
+
+    public int getDate() {
+        return date;
     }
 }

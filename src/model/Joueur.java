@@ -36,6 +36,7 @@ public class Joueur {
         constructions = new ArrayList<>();
         routes = new ArrayList<>();
         cartes = new ArrayList<>();
+        nom = "joueur " + n;
         switch (n) {
             case 1 : couleur = Color.BLUE; break;
             case 2 : couleur = Color.GREEN; break;
@@ -156,4 +157,11 @@ public class Joueur {
         return false;
     }
 
+    public int getTotalRessources() {
+        int totalRessources = 0;
+        for (int ressource : ressources) {
+            totalRessources += ressource;
+        }
+        return totalRessources;
+    }
 }
