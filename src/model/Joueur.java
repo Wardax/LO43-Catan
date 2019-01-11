@@ -34,7 +34,8 @@ public class Joueur {
 
     public Joueur(int n) {
         numero = n;
-        ressources = new int[8]; // nombre de ressource a changer
+        ressources = new int[8];
+        //for (int i = 0; i<8; i++) ressources[i]= 200; // pour test
         constructions = new ArrayList<>();
         routes = new ArrayList<>();
         cartes = new ArrayList<>();

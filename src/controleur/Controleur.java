@@ -420,7 +420,7 @@ public class Controleur {
             }
         }
     }
-    
+
     private void constructionRoute() {
         vue.getActionEnCours().setText("Construction route en cours");
         VuePlateau[] vps = vue.getVuesPlateaux();
@@ -514,7 +514,7 @@ public class Controleur {
                     vc.setImage(new Image("images/convecteur"+model.getJoueurActuel().getNumero()+".png"));
                     for (VueConstruction vc2 : vcs) {
 
-                        if (((Delorean)vc2.getConstruction()).getConvecteur() == null && vc2 != vc) vc2.setImage(new Image("images/player"+vc2.getConstruction().getJoueur().getNumero()+".png"));
+                        if (vc2.getConstruction() instanceof Delorean && ((Delorean)vc2.getConstruction()).getConvecteur() == null && vc2 != vc) vc2.setImage(new Image("images/player"+vc2.getConstruction().getJoueur().getNumero()+".png"));
                         vc2.setOnMouseClicked(null);
                     }
                     destinationConvecteur(vc.getConstruction().getCroisement());
