@@ -1,10 +1,11 @@
 package model;
 
-import model.cartes.CarteDeveloppement;
+import model.cartes.*;
 import model.constructions.Construction;
 import model.constructions.Delorean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Model {
@@ -13,23 +14,29 @@ public class Model {
     private int nbJoueurs;
     private ArrayList<CarteDeveloppement> cartes;
     private Joueur joueurActuel;
-    private static Random rand = new Random();
+    final static Random rand = new Random();
 
     public Model(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
         plateaux = new Plateau[4];
-        plateaux[0] = new Plateau(1855);
-        plateaux[1] = new Plateau(1955);
-        plateaux[2] = new Plateau(1985);
-        plateaux[3] = new Plateau(2015);
+        for (int i =0; i<4; i++) {
+            plateaux[i] = new Plateau(i);
+        }
 
         joueurs = new Joueur[nbJoueurs];
-        joueurs[0] = new Joueur(1);
-        joueurs[1] = new Joueur(2);
-        joueurs[2] = new Joueur(3);
-        joueurs[3] = new Joueur(4);
+        for (int i = 0; i<nbJoueurs; i++) {
+            joueurs[i] = new Joueur(i+1);
+        }
 
         joueurActuel = joueurs[0];
+
+        cartes = new ArrayList<>();
+        for (int i = 0; i < 5; i++) cartes.add(new CartePV());
+        for (int i = 0; i < 2; i++) cartes.add(new CarteMonopole());
+        for (int i = 0; i < 2; i++) cartes.add(new CarteRoute());
+        for (int i = 0; i < 2; i++) cartes.add(new CarteDecouverte());
+        for (int i = 0; i < 14; i++) cartes.add(new CarteChevalier());
+        Collections.shuffle(cartes);
     }
 
     public ArrayList<CarteDeveloppement> getCartes() {
@@ -52,6 +59,10 @@ public class Model {
         return nbJoueurs;
     }
 
+    /**
+     * cherche les routes constructibles par le joueur actuel
+     * @return
+     */
     public ArrayList<Route> routesConstructibles() {
         ArrayList<Route> routesConstructibles = new ArrayList<>();
         for (Route r : joueurActuel.getRoutes()) {
@@ -71,6 +82,10 @@ public class Model {
         return routesConstructibles;
     }
 
+    /**
+     * cherche les deloreans constructibles par le joueur actuel
+     * @return
+     */
     public ArrayList<Croisement> deloreansConstructibles() {
         ArrayList<Croisement> deloreansConstructibles = new ArrayList<>();
 
@@ -82,14 +97,38 @@ public class Model {
         return deloreansConstructibles;
     }
 
-    public ArrayList<Delorean> convecteursConstrucibles() {
-        ArrayList<Delorean> convecteursConstructibles = new ArrayList<>();
-        for (Construction c : joueurActuel.getConstructions()) {
-            if (c instanceof Delorean && ((Delorean)c).getConvertisseur() == null) {
-                convecteursConstructibles.add((Delorean)c);
+    /**
+     * cherche les convecteurs constructibles par le joueur actuel
+     * @return
+     */
+    public ArrayList<Construction> convecteursConstrucibles() {
+        int[] res = joueurActuel.getRessources();
+        ArrayList<Construction> convecteursConstructibles = new ArrayList<>();
+        if (res[2] > 1 && res[3] > 0) {
+            for (Construction c : joueurActuel.getConstructions()) {
+                if (c instanceof Delorean && ((Delorean) c).getConvecteur() == null && res[c.getCroisement().getDate()+4]>2) {
+                    convecteursConstructibles.add(c);
+                }
             }
         }
         return convecteursConstructibles;
+    }
+
+    /**
+     * cherche les monuments constructibles par le joueur actuel
+     * @return
+     */
+    public ArrayList<Croisement> monumentsConstructibles() {
+        ArrayList<Croisement> monumentsConstructibles = new ArrayList<>();
+        int[] res = joueurActuel.getRessources();
+        if (res[0] > 1 && res[1] > 1) {
+            for (Route r : joueurActuel.getRoutes()) {
+                for (Croisement c : r.getCroisements()) {
+                    if (c.isConstructible() && plateaux[c.getDate()].getMonument() == null && res[c.getDate()+4] > 3) monumentsConstructibles.add(c);
+                }
+            }
+        }
+        return monumentsConstructibles;
     }
 
     public void joueurSuivant() {
@@ -97,19 +136,44 @@ public class Model {
         joueurActuel = joueurs[joueurActuel.getNumero()%nbJoueurs];
     }
 
+    /**
+     * chosit aléatoirement une époque parmit celles atteintes
+     * lance 2 dé et produit des ressources sur la parcelle ayant comme numéro la somme des 2 dées
+     * @return l'index de l'époque, le premier dé et le second dé
+     */
     public int[] lancementDe(){
-        int[] de = new int[3];
-        de[0] = rand.nextInt(4) + 1;
-        de[1] = rand.nextInt(6) + 1;
-        de[2] = rand.nextInt(6) + 1;
-        ArrayList<Parcelle> parcelles = plateaux[0/*de[0]-1*/].getParcelles();
-        int n = de[1] + de[2];
+        int nbEpoqueAtteinte = 0;
+        for (Plateau p : plateaux) {
+            if (p.isAtteint()) nbEpoqueAtteinte++;
+        }
+        int[] des = new int[3];
+        des[0] = rand.nextInt(nbEpoqueAtteinte) + 1;
+        des[1] = rand.nextInt(6) + 1;
+        des[2] = rand.nextInt(6) + 1;
+        ArrayList<Parcelle> parcelles = plateaux[des[0]-1].getParcelles();
+        int n = des[1] + des[2];
         for (Parcelle p : parcelles) {
             if(p.getNumero() == n)  p.produitRessource();
         }
-        return de;
+        return des;
 
     }
 
-
+    /**
+     * enlève aléatoirement la moitié des ressources des joueurs qui ont plus de 7 ressources
+     */
+    public void limiteRessources() {
+        for (Joueur joueur : joueurs) {
+            if (joueur.getTotalRessources() > 7) {
+                int i = joueur.getTotalRessources() / 2;
+                while (i > 0) {
+                    int n = rand.nextInt(8);
+                    if (joueur.getRessources()[n] > 0) {
+                        joueur.supprimeRessource(n, 1);
+                        i--;
+                    }
+                }
+            }
+        }
+    }
 }

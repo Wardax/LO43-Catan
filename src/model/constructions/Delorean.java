@@ -4,27 +4,27 @@ import model.Croisement;
 import model.Joueur;
 
 public class Delorean extends Construction {
-    private Convertisseur convertisseur;
+    private Convecteur convecteur;
 
     public Delorean(Joueur j, Croisement c) {
         super(j, c);
     }
 
-    public int getNbPoint() {
-        if (convertisseur == null) return 1;
-        return 2;
+    public void setConvecteur(Convecteur convecteur) {
+        this.convecteur = convecteur;
     }
 
-    public void setConvertisseur(Convertisseur convertisseur) {
-        this.convertisseur = convertisseur;
-    }
-
+    /**
+     * Ajoute 1 ressource au joueurs possèdant la construction
+     * en ajoute 2 si un convecteur est lié à la delorean
+     * @param type
+     */
     public void recupereRessource(int type){
-        if (convertisseur == null) getJoueur().ajouteRessource(type, 1);
+        if (convecteur == null) getJoueur().ajouteRessource(type, 1);
         else getJoueur().ajouteRessource(type, 2);
     }
 
-    public Convertisseur getConvertisseur() {
-        return convertisseur;
+    public Convecteur getConvecteur() {
+        return convecteur;
     }
 }

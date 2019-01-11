@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Katane:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Katane_jar</output-path>
+    <root id="archive" name="Katane.jar">
+      <element id="module-output" name="Katane" />
+    </root>
+  </artifact>
+</component>

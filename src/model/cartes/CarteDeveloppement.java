@@ -1,7 +1,12 @@
 package model.cartes;
 
-import model.Joueur;
+
+import model.Model;
 
 public abstract class CarteDeveloppement {
-    public abstract void activation(Joueur j);
+    /**
+     * Active les effets de la carte développement
+     * @param model
+     */
+    public abstract void activation(Model model);
 }

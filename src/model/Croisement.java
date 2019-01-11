@@ -9,17 +9,15 @@ public class Croisement {
     private Construction construction;
     private int posX;
     private int posY;
+    private int date;
 
-    public Croisement() {
+    public Croisement(int date) {
         routes = new ArrayList<>();
+        this.date = date;
     }
 
     public void setConstruction(Construction c) {
         construction = c;
-    }
-
-    public void recupereRessource(int type) {
-        if (construction != null) construction.recupereRessource(type);
     }
 
     public boolean hasConstruction() {
@@ -46,6 +44,10 @@ public class Croisement {
         routes.add(route);
     }
 
+    /**
+     * Un croisement est constructible lorsqu'il n'y a pas de construction sur le croisement et sur les croisements adjacents
+     * @return
+     */
     public boolean isConstructible() {
         boolean constructible = construction == null;
         for (Route r : routes) {
@@ -57,5 +59,12 @@ public class Croisement {
     public void setPos(int x, int y) {
         posX = x;
         posY = y;
+    }
+
+    /**
+     * @return index du plateau du croisement
+     */
+    public int getDate() {
+        return date;
     }
 }

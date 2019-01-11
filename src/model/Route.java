@@ -39,6 +39,11 @@ public class Route {
         return rotation;
     }
 
+    /**
+     * Renvoie le croisement adjacent à celui envoyé en paramètre
+     * @param croisement
+     * @return
+     */
     public Croisement getCroisementAdj(Croisement croisement) {
         if (croisements[0] == croisement) return croisements[1];
         return croisements[0];

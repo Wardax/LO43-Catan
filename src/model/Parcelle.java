@@ -17,10 +17,15 @@ public class Parcelle {
         return croisements;
     }
 
+    /**
+     * produit des ressources sur les constructions adjacentes
+     */
     public void produitRessource(){
         if (!brigand) {
             for(int i = 0; i<6; i++) {
-                croisements[i].recupereRessource(type);
+                if (croisements[i].getConstruction() != null){
+                    croisements[i].getConstruction().recupereRessource(type);
+                }
             }
         }
     }
@@ -56,5 +61,9 @@ public class Parcelle {
 
     public int getType() {
         return type;
+    }
+
+    public boolean hasBrigand() {
+        return brigand;
     }
 }

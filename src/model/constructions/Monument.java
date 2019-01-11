@@ -8,11 +8,12 @@ public class Monument extends Construction {
         super(j, c);
     }
 
-    public int getNbPoint() {
-        return 3;
-    }
 
+    /**
+     * ajoute 2 ressources aux joueurs possédant le monument
+     * @param type
+     */
     public void recupereRessource(int type) {
-
+        getJoueur().ajouteRessource(type, 2);
     }
 }

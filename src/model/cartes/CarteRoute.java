@@ -1,8 +1,9 @@
 package model.cartes;
 
-import model.Joueur;
+import model.Model;
 
 public class CarteRoute extends CarteDeveloppement{
-    public void activation(Joueur j){
+    public void activation(Model model){
+        model.getJoueurActuel().setRoutesGratuites(model.getJoueurActuel().getRoutesGratuites() + 2);
     }
 }

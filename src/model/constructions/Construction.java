@@ -12,8 +12,6 @@ public abstract class Construction {
         croisement = c;
     }
 
-    public abstract int getNbPoint();
-
     public abstract void recupereRessource(int type);
 
     public Joueur getJoueur() {

@@ -1,5 +1,7 @@
 package model;
 
+import model.constructions.Monument;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,10 +10,19 @@ public class Plateau {
     private Brigand brigand;
     private Croisement[] croisements;
     private ArrayList<Route> routes;
-    int date;
+    private int date;
+    private Monument monument;
+    private boolean atteint;
 
 
     public Plateau(int date) {
+        atteint = false;
+        switch (date) {
+            case 0: this.date = 1885; atteint = true; break;
+            case 1: this.date = 1955; break;
+            case 2: this.date = 1985; break;
+            case 3: this.date = 2015; break;
+        }
 
         parcelles = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -27,7 +38,7 @@ public class Plateau {
             parcelles.add(new Parcelle(3));
         }
         for (int i = 0; i < 3; i++) {
-            parcelles.add(new Parcelle(4));
+            parcelles.add(new Parcelle(4+date));
         }
 
         Collections.shuffle(parcelles);
@@ -37,10 +48,10 @@ public class Plateau {
         }
 
         Collections.shuffle(parcelles);
-
+        brigand = new Brigand(parcelles.get(9));
         croisements = new Croisement[54];
         for (int i = 0; i < 54; i++) {
-            croisements[i] = new Croisement();
+            croisements[i] = new Croisement(date);
         }
 
         lien(parcelles.get(0), 160, 0, 0, 3, 8);
@@ -105,6 +116,15 @@ public class Plateau {
 
     }
 
+    /**
+     * lie une parcelle a ses croisements pour créer le graphe
+     * @param p parcelle à lier
+     * @param x position en x de la parcelle
+     * @param y position en y de la parcelle
+     * @param c0 numéro du croisement en haut à gauche
+     * @param c1 numéro du croisement à gauche
+     * @param c2 numéro du croisement en bas à gauche
+     */
     private void lien(Parcelle p, int x, int y, int c0, int c1, int c2) {
         p.setPos(x, y);
         Croisement[] cs = new Croisement[6];
@@ -123,6 +143,11 @@ public class Plateau {
         cs[5].setPos(x + 80, y + 100);
     }
 
+    /**
+     * crée une route entre 2 croisements
+     * @param c1
+     * @param c2
+     */
     private void creationRoutes(Croisement c1, Croisement c2) {
         int x = c1.getPosX() < c2.getPosX() ? c1.getPosX() : c2.getPosX();
         int y = c1.getPosY() < c2.getPosY() ? c1.getPosY() : c2.getPosY();
@@ -150,5 +175,25 @@ public class Plateau {
 
     public int getDate() {
         return date;
+    }
+
+    public void setMonument(Monument monument) {
+        this.monument = monument;
+    }
+
+    public Monument getMonument() {
+        return monument;
+    }
+
+    public Brigand getBrigand() {
+        return brigand;
+    }
+
+    public boolean isAtteint() {
+        return atteint;
+    }
+
+    public void setAtteint(boolean atteint) {
+        this.atteint = atteint;
     }
 }

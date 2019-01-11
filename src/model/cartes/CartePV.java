@@ -1,8 +1,9 @@
 package model.cartes;
 
-import model.Joueur;
+import model.Model;
 
 public class CartePV extends CarteDeveloppement{
-    public void activation(Joueur j){
+    public void activation(Model model){
+        model.getJoueurActuel().setScore(model.getJoueurActuel().getScore()+1);
     }
 }

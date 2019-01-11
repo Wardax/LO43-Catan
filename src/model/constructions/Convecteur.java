@@ -2,11 +2,11 @@ package model.constructions;
 
 import model.Croisement;
 
-public class Convertisseur {
+public class Convecteur {
 
     private Croisement acces;
 
-    public Convertisseur(Croisement c) {
+    public Convecteur(Croisement c) {
         acces = c;
     }
 
